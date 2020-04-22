@@ -20,7 +20,17 @@ def main(script):
     script: string script name
     """
     print('%s: All tests passed.' % script)
-
-
+    
+    df = nsfg.ReadFemPreg()
+    print(df.pregnum.value_counts().sort_index())
+    
+    caseid = [1, 82, 900, 1896, 5676]
+    resp = nsfg.ReadFemResp()
+    for i in caseid:
+        try:
+            print(i,':', resp[resp.caseid==i].pregnum == len(df[df.caseid == i]))
+        except IndexError:
+            print(f'caseid {i} out of index')
+    
 if __name__ == '__main__':
     main(*sys.argv)
