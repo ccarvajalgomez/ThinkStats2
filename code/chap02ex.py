@@ -21,7 +21,11 @@ def Mode(hist):
 
     returns: value from Hist
     """
-    return 0
+    mode = (0, 0)
+    for i in list(hist.Items()):
+        if i[1] > mode[1]:
+            mode = i
+    return mode[0]
 
 
 def AllModes(hist):
@@ -31,7 +35,11 @@ def AllModes(hist):
 
     returns: iterator of value-freq pairs
     """
-    return []
+    # Sort the key value pairs using a list comprehension and the Sorted function on the values
+    sort = sorted((key, value) for (value, key) in hist.Items())[::-1]
+    # Restore the key, value order that was inverted in the previous line
+    modes = [(key, value) for (value, key) in sort]
+    return modes
 
 
 def main(script):
